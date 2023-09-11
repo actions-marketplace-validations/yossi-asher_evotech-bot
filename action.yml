@@ -1,7 +1,5 @@
-name: run main.py
-
-on:
-  workflow_dispatch:
+name: evotech-bot
+Description: evotech-bot
 
 env:
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
