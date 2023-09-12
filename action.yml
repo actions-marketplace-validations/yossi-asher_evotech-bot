@@ -1,34 +1,38 @@
-name: evotech-bot
-Description: evotech-bot
+name: 'evotech-bot'
+description: 'evotech-bot'
 
-env:
-  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  BRANCH_NAME: evotech-upgrade-${{ github.run_id }}
+inputs:
+  openai-api-key:
+    description: 'openai-api-key'
+    default: ''
 
-jobs:
-  add-space:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2s
-      - name: Create branch
-        run: |
-          git checkout -b $BRANCH_NAME
-          git push origin $BRANCH_NAME
-      - name: Install packages
-        run: pip install -r requirements.txt
-      - name: Call model
-        run: |
-          python main.py
-      - name: Commit changes
-        run: |
-          git config --global user.email "bot@evotech.com"
-          git config --global user.name "evotech bot" d
-          git commit -am "evotech recommendation"
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v5.0.0
-        with:
-          title: Evotech recommendation
-          body: Evotech recommendation
-          branch: $BRANCH_NAME
-          base: main
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Create branch
+      run: |
+        git checkout -b BRANCH_NAME
+        git push origin BRANCH_NAME
+      shell: bash
+    - name: Install OpenAI package
+      run: pip install -r requirements.txt
+      shell: bash
+    - name: Call model
+      run: |
+        python main.py
+      shell: bash
+    - name: Commit changes
+      run: |
+        git config --global user.email "bot@evotech.com"
+        git config --global user.name "evotech bot"
+        git commit -am "evotech recommendation"
+      shell: bash
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v5.0.0
+      with:
+        title: Evotech recommendation
+        body: Evotech recommendation
+        branch: BRANCH_NAME
+        base: main
