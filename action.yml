@@ -16,7 +16,7 @@ runs:
         git checkout -b BRANCH_NAME
         git push origin BRANCH_NAME
       shell: bash
-    - name: Install OpenAI package
+    - name: Install packages
       run: pip install -r requirements.txt
       shell: bash
     - name: Call model
